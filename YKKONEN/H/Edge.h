@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "H/Node.h"
-
+#include "Node.h"
+struct Node;
 
 struct Edge {
     Node* to;

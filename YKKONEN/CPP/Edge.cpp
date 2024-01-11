@@ -1,8 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "Edge.h"
-#include "Node.h"
-
+#include "../H/Edge.h"
+#include "Node.cpp"
 
 Edge::Edge() {}
 
@@ -24,12 +23,12 @@ int Edge::len() {
 }
 
 Node* Edge::cut(int lenght) {
-    assert((lenght > 0) && (l + lenght >= r));
+    assert((lenght > 0) && (l + lenght <= r));
     Node* newNode = new Node();
     Edge upEdge = Edge(from, newNode, l, l + lenght - 1, t);
     Edge downEdge = Edge(newNode, to, l + lenght, r, t);
-    newNode->changeChild(get(lenght - 1), downEdge);
-    from->changeChild(get(l), upEdge);
+    newNode->changeChild(get(lenght), downEdge);
+    from->changeChild(get(0), upEdge);
     return newNode;
 }
 

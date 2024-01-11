@@ -1,8 +1,8 @@
 #pragma once
 #include <bits/stdc++.h>
-#include <H/Ykkonen.h>
-#include "H/Node.h"
-#include "H/Edge.h"
+#include "../H/Ykkonen.h"
+#include "Node.cpp"
+#include "Edge.cpp"
 
 
 void Ykkonen::build() {
@@ -40,12 +40,12 @@ void Ykkonen::build() {
                 newNode->createSuffixEnd(nextLetter, i, &t);
                 if (prefSuffix != nullptr) prefSuffix->suffixLink = newNode;
                 prefSuffix = newNode;
-                activeEdge = newNode->get(activeEdge.firstLetter());
                 int firstIndexEdge = activeEdge.l;
                 if (activeNode == root) {
                     firstIndexEdge++;
                     deepEdge--;
                 } else activeNode = activeNode->suffixLink;
+                activeEdge = activeNode->get(t[firstIndexEdge]);
 
                 while (deepEdge > 0 && deepEdge >= activeNode->get(t[firstIndexEdge]).len()) {
                     activeEdge = activeNode->get(t[firstIndexEdge]);
@@ -56,7 +56,7 @@ void Ykkonen::build() {
                 if (deepEdge == 0) {
                     prefSuffix->suffixLink = activeNode;
                     prefSuffix = activeNode;
-                } 
+                } else activeEdge = activeNode->get(t[firstIndexEdge]);
             }
         }
     }
@@ -65,17 +65,25 @@ void Ykkonen::build() {
 
 Ykkonen::Ykkonen(const std::string& _data_) {
     std::vector<int> convertToInt = stringToVector(_data_);
-    convertToInt.push_back(INT_MAX);
-    settingData(convertToInt);
+    init(convertToInt);
 }
 
 Ykkonen::Ykkonen(const std::vector<int>& _data_) {
-    settingData(_data_);
+    init(_data_);
 }
 
-void Ykkonen::settingData(const std::vector<int>& _data_) {
+void Ykkonen::init(const std::vector<int>& _data_) {
     this->t = _data_;
+    this->t.push_back(INT_MAX);
+    build();
 }
+
+void Ykkonen::reInit(const std::vector<int>& _data_) {
+    this->t = _data_;
+    this->t.push_back(INT_MAX);
+    build();
+}
+
 
 bool Ykkonen::find(const std::vector<int>& _data_) {
     Node* activeNode = root;
@@ -100,4 +108,12 @@ bool Ykkonen::find(const std::vector<int>& _data_) {
 
 bool Ykkonen::find(const std::string& _data_) {
     return find(stringToVector(_data_));
+}
+
+
+std::vector<int> Ykkonen::stringToVector(const std::string& s) {
+    std::vector<int> _data_(s.size());
+    for (int i = 0; i < s.size(); ++i)
+        _data_[i] = s[i];
+    return _data_;
 }
