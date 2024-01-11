@@ -3,21 +3,25 @@
 #include "Edge.cpp"
 
 
-bool Node::find(int letter) {
+template <typename T>
+bool Node<T>::find(int letter) {
     return (children.find(letter) != children.end());
 }
 
-Edge Node::get(int letter) {
+template <typename T>
+Edge<T> Node<T>::get(int letter) {
     assert(find(letter));
     return children[letter];
 }
 
-void Node::createSuffixEnd(int letter, int left, std::vector<int>* t) {
+template <typename T>
+void Node<T>::createSuffixEnd(int letter, int left, T* t) {
     Node* newNode = new Node();
     Edge newEdge = Edge(this, newNode, left, (*t).size() - 1, t);
     children[letter] = newEdge;
 }
 
-void Node::changeChild(int letter, const Edge& e) {
+template <typename T>
+void Node<T>::changeChild(int letter, const Edge<T>& e) {
     children[letter] = e;
 }

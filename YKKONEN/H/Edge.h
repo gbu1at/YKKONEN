@@ -1,17 +1,20 @@
 #pragma once
 #include <bits/stdc++.h>
 #include "Node.h"
+
+template <typename T>
 struct Node;
 
+template <typename T>
 struct Edge {
-    Node* to;
-    Node* from;
+    Node<T>* to;
+    Node<T>* from;
     int l; int r;
-    std::vector<int>* t;
+    T* t;
     Edge();
-    Edge(Node* from, Node* to, int l, int r, std::vector<int>* t);
+    Edge(Node<T>* from, Node<T>* to, int l, int r, T* t);
     int get(int idx);
     int len();
-    Node* cut(int lenght);
+    Node<T>* cut(int lenght);
     int firstLetter();
 };

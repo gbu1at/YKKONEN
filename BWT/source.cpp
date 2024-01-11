@@ -6,7 +6,7 @@ int main() {
     while (m--) {
         std::string t; std::cin >> t;
         BWT bwt(t);
-        auto[result, k] = bwt.coderString();
+        auto[result, k] = bwt.coder();
         std::cout << result << " " << k << '\n';
         if (decoder(result, k) != t) std::cout << "------ERROR------\n";
     }

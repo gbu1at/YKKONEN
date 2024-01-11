@@ -3,9 +3,11 @@
 #include "../H/Edge.h"
 #include "Node.cpp"
 
-Edge::Edge() {}
+template <typename T>
+Edge<T>::Edge() {}
 
-Edge::Edge(Node* from, Node* to, int l, int r, std::vector<int>* t) {
+template <typename T>
+Edge<T>::Edge(Node<T>* from, Node<T>* to, int l, int r, T* t) {
     this->to = to;
     this->from = from;
     this->l = l;
@@ -13,25 +15,30 @@ Edge::Edge(Node* from, Node* to, int l, int r, std::vector<int>* t) {
     this->t = t;
 }
 
-int Edge::get(int idx) {
+template <typename T>
+int Edge<T>::get(int idx) {
     assert(l + idx <= r);
     return (*t)[l + idx];
 }
 
-int Edge::len() {
+template <typename T>
+int Edge<T>::len() {
     return r - l + 1;
 }
 
-Node* Edge::cut(int lenght) {
+
+template <typename T>
+Node<T>* Edge<T>::cut(int lenght) {
     assert((lenght > 0) && (l + lenght <= r));
-    Node* newNode = new Node();
-    Edge upEdge = Edge(from, newNode, l, l + lenght - 1, t);
-    Edge downEdge = Edge(newNode, to, l + lenght, r, t);
+    Node<T>* newNode = new Node<T>();
+    Edge<T> upEdge = Edge<T>(from, newNode, l, l + lenght - 1, t);
+    Edge<T> downEdge = Edge<T>(newNode, to, l + lenght, r, t);
     newNode->changeChild(get(lenght), downEdge);
     from->changeChild(get(0), upEdge);
     return newNode;
 }
 
-int Edge::firstLetter() {
+template <typename T>
+int Edge<T>::firstLetter() {
     return (*t)[l];
 }

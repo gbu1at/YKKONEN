@@ -1,14 +1,17 @@
 #pragma once
 #include <bits/stdc++.h>
 #include "Edge.h"
+
+template <typename T>
 struct Edge;
 
+template <typename T>
 struct Node {
-    std::map<int, Edge> children;
+    std::map<int, Edge<T>> children;
     Node* suffixLink;
     bool find(int letter);
-    Edge get(int letter);
-    void createSuffixEnd(int letter, int left, std::vector<int>* t);
-    void changeChild(int letter, const Edge& e);
+    Edge<T> get(int letter);
+    void createSuffixEnd(int letter, int left, T* t);
+    void changeChild(int letter, const Edge<T>& e);
 
 };
