@@ -4,9 +4,8 @@
 
 std::string randStr(int n) {
     std::string res;
-    // int n = 6;
     for (int i = 0; i < n; ++i) {
-        int c = rand() % 2;
+        int c = rand() % 10;
         res += toString(c);
     }
     return res;
@@ -22,6 +21,9 @@ int main() {
     int n = 1;
     while (n--) {
         std::string t = randStr(10000); 
+
+        
+
         std::cout << "-----START BUILD LZ77----\n";
         std::string a = LZ77<std::string>().compress(t);
         std::cout << "-----FINISH BUILD LZ77----\n";
